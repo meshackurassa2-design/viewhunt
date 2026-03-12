@@ -1,49 +1,120 @@
-import { LayoutDashboard, TrendingUp, Search, BarChart3, BookText, Settings, ShieldCheck, Zap } from 'lucide-react'
+import { TrendingUp, BarChart3, ShieldCheck, BookText, Lightbulb, Zap } from 'lucide-react'
 
 export default function Dashboard({ user, onNavigate, savedItems = [] }) {
   const stats = [
-    { label: 'Saved Insights', val: savedItems.length.toString(), icon: BookText },
-    { label: 'Global Trends', val: '24/7 Live', icon: TrendingUp },
-    { label: 'Intelligence', val: 'V3 Active', icon: ShieldCheck },
+    { label: 'Saved', val: savedItems.length.toString(), icon: BookText },
+    { label: 'Live Trends', val: '24/7', icon: TrendingUp },
+    { label: 'AI Engine', val: 'ON', icon: ShieldCheck },
+  ]
+
+  const cards = [
+    { label: 'Market Trends', desc: 'See what is trending right now on YouTube globally.', action: 'trends', icon: TrendingUp, cta: 'Open Trends' },
+    { label: 'Viral Scraper', desc: 'Find videos going viral before everyone else.', action: 'scraper', icon: Zap, cta: 'Scrape Now' },
+    { label: 'Channel Audit', desc: 'Deep-dive any YouTube channel with real metrics.', action: 'analyzer', icon: BarChart3, cta: 'Audit Channel' },
+    { label: 'AI Video Ideas', desc: 'Generate viral video ideas powered by YouTube data.', action: 'ideas', icon: Lightbulb, cta: 'Generate Ideas' },
   ]
 
   return (
     <div className="page-wrap anim-up">
-      <div style={{ marginBottom: 32 }}>
-        <p className="label" style={{ marginBottom: 6 }}>Overview</p>
-        <h1 className="t-xl" style={{ color: 'var(--white)', marginBottom: 4 }}>Market Dashboard</h1>
-        <p style={{ color: 'var(--muted2)', fontSize: 13 }}>Welcome back, {user?.display_name || 'Creator'}. Here is your command center.</p>
+      
+      {/* Header */}
+      <div style={{ marginBottom: 24 }}>
+        <p className="label" style={{ marginBottom: 4 }}>Overview</p>
+        <h1 className="t-xl" style={{ color: '#fff', marginBottom: 6 }}>Market Dashboard</h1>
+        <p style={{ color: '#888', fontSize: 13 }}>Welcome back, {user?.display_name || 'Creator'}.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20, marginBottom: 40 }}>
+      {/* Stat Cards — 3 columns always, responsive font */}
+      <div className="stat-grid" style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(3, 1fr)', 
+        gap: 10, 
+        marginBottom: 24 
+      }}>
         {stats.map(s => (
-          <div key={s.label} style={{ padding: 24, borderRadius: 16, background: 'var(--dark)', border: '1px solid var(--border)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-              <s.icon size={18} style={{ color: 'var(--muted)' }} />
-              <span className="badge" style={{ background: 'var(--white)', color: 'var(--black)' }}>REAL-TIME</span>
-            </div>
-            <p style={{ fontSize: 32, fontWeight: 900, color: 'var(--white)', marginBottom: 4 }}>{s.val}</p>
-            <p style={{ fontSize: 12, color: 'var(--muted)', fontWeight: 700, textTransform: 'uppercase' }}>{s.label}</p>
+          <div key={s.label} style={{ 
+            padding: '14px 10px', 
+            borderRadius: 12, 
+            background: '#111', 
+            border: '1px solid #222',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8
+          }}>
+            <s.icon size={16} style={{ color: '#555' }} />
+            <p className="stat-val" style={{ fontSize: 22, fontWeight: 900, color: '#fff', lineHeight: 1 }}>{s.val}</p>
+            <p style={{ fontSize: 10, color: '#555', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{s.label}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
-        <div style={{ padding: 32, borderRadius: 20, background: '#111', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <h3 className="t-large">Quick Research</h3>
-          <p style={{ color: 'var(--muted2)', fontSize: 13 }}>Dive back into your latest viral discovery or audit a new channel.</p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 10 }}>
-            <button onClick={() => onNavigate('trends')} className="btn btn-primary" style={{ flex: 1 }}>Trends Feed</button>
-            <button onClick={() => onNavigate('analyzer')} className="btn btn-secondary" style={{ flex: 1 }}>Audit Channel</button>
+      {/* Feature Cards — 2 columns on tablet+, 1 on mobile */}
+      <div className="action-grid" style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        gap: 12,
+        marginBottom: 16
+      }}>
+        {cards.map(c => (
+          <div key={c.label} style={{ 
+            padding: '20px 18px', 
+            borderRadius: 16, 
+            background: '#111', 
+            border: '1px solid #222',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <c.icon size={18} style={{ color: '#fff' }} />
+              <span style={{ fontWeight: 800, fontSize: 14, color: '#fff' }}>{c.label}</span>
+            </div>
+            <p style={{ fontSize: 13, color: '#666', lineHeight: 1.5 }}>{c.desc}</p>
+            <button 
+              onClick={() => onNavigate(c.action)}
+              style={{ 
+                marginTop: 4,
+                padding: '9px 16px',
+                borderRadius: 8,
+                background: '#fff',
+                color: '#000',
+                border: 'none',
+                fontWeight: 700,
+                fontSize: 12,
+                cursor: 'pointer',
+                alignSelf: 'flex-start',
+                letterSpacing: '0.03em'
+              }}
+            >
+              {c.cta}
+            </button>
           </div>
-        </div>
-
-        <div style={{ padding: 32, borderRadius: 20, background: 'var(--white)', color: 'var(--black)', display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 800 }}>Viral Tip of the Day</h3>
-          <p style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.5 }}>"Channels with less than 10k subs that get 100k+ views on a single topic indicate a massive market gap. Look for those in the Viral Scraper."</p>
-          <button onClick={() => onNavigate('scraper')} className="btn" style={{ marginTop: 10, background: 'var(--black)', color: 'var(--white)', border: 'none' }}>Try Scraper</button>
-        </div>
+        ))}
       </div>
+
+      {/* Tip card */}
+      <div style={{ 
+        padding: '18px 16px', 
+        borderRadius: 14, 
+        background: '#fff', 
+        color: '#000',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8
+      }}>
+        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#333' }}>💡 Viral Tip</span>
+        <p style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.6 }}>
+          "Channels under 10K subs getting 100K+ views on one topic = massive niche gap. Hunt those in the Viral Scraper."
+        </p>
+        <button 
+          onClick={() => onNavigate('scraper')}
+          style={{ padding: '8px 14px', borderRadius: 8, background: '#000', color: '#fff', border: 'none', fontWeight: 700, fontSize: 12, cursor: 'pointer', alignSelf: 'flex-start' }}
+        >
+          Try Scraper
+        </button>
+      </div>
+
     </div>
   )
 }
+

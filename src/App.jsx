@@ -193,52 +193,62 @@ export default function App() {
   return (
     <div id="app-root-lock" className="v-lock">
       
-      {/* MOBILE TOP BAR - iPhone Mini Safe Area Fix */}
+      {/* MOBILE TOP BAR — safe area aware, fits iPhone Mini to iPhone Pro Max */}
       {!isDesktop && (
         <div style={{ 
-          paddingTop: 'env(safe-area-inset-top, 44px)',
+          flexShrink: 0,
           background: '#000',
           zIndex: 1000,
-          flexShrink: 0
+          /* Safe area for notch/dynamic island then 48px bar */
+          paddingTop: 'env(safe-area-inset-top, 44px)',
         }}>
           <div style={{ 
-            height: 48, 
+            height: 48,
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between',
-            paddingLeft: 12,
-            paddingRight: 12,
-            borderBottom: '1px solid #2d2d2d'
+            paddingLeft: 14,
+            paddingRight: 14,
+            borderBottom: '1px solid #222',
           }}>
-            <div style={{ width: 36, display: 'flex', justifyContent: 'flex-start' }}>
+            {/* Left — Admin icon (admin only) */}
+            <div style={{ width: 34 }}>
               {user?.email === 'meshackurassa2@gmail.com' && (
                 <button 
                   onClick={() => setPage('admin')} 
                   style={{ 
-                    width: 32, height: 32, border: 'none', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: page === 'admin' ? '#fff' : '#666' 
+                    width: 32, height: 32, 
+                    border: 'none', background: 'transparent', 
+                    cursor: 'pointer', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: page === 'admin' ? '#fff' : '#555'
                   }}
                 >
                   <ShieldCheck size={16} />
                 </button>
               )}
             </div>
-            
+
+            {/* Center — App name */}
             <span style={{ 
               fontWeight: 900, 
-              fontSize: 10, 
+              fontSize: 11,
               textTransform: 'uppercase', 
-              letterSpacing: '0.18em',
+              letterSpacing: '0.2em',
               color: '#fff',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
             }}>ViewHunt Pro</span>
-            
-            <div style={{ width: 36, display: 'flex', justifyContent: 'flex-end' }}>
+
+            {/* Right — Settings icon */}
+            <div style={{ width: 34, display: 'flex', justifyContent: 'flex-end' }}>
               <button 
                 onClick={() => setPage('settings')} 
                 style={{ 
-                  width: 32, height: 32, border: 'none', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: page === 'settings' ? '#fff' : '#666' 
+                  width: 32, height: 32,
+                  border: 'none', background: 'transparent', 
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: page === 'settings' ? '#fff' : '#555'
                 }}
               >
                 <Settings size={16} />
@@ -248,7 +258,9 @@ export default function App() {
         </div>
       )}
 
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', position: 'relative', minHeight: 0 }}>
+      {/* CONTENT AREA — fills remaining space between header and bottom nav */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
+
         {isDesktop && (
           <div className="sidebar-container-final">
             <Sidebar 

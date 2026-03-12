@@ -211,32 +211,80 @@ body {
 .page-wrap { 
   max-width: 1100px; 
   margin: 0 auto; 
-  padding: 40px 32px; 
+  padding: 20px 14px 140px; /* mobile default: tight top, large bottom for nav */
 }
 
-/* ─── RESPONSIVE LAYOUTS ───────────────────────────────────────────────── */
-@media (min-width: 768px) {
-  .md-row { flex-direction: row !important; }
-  .md-flex-always { display: flex !important; }
-}
+/* ─── RESPONSIVE BREAKPOINTS ─────────────────────────────────────────────── */
 
-@media (max-width: 768px) { 
-  .page-wrap { 
-    padding: 16px 14px 130px; /* Tighter native margins, enough bottom clearance */
-  } 
-  .auth-hero {
-    flex: none !important;
-    border-bottom: none !important;
-    padding: 40px 20px !important;
+/* iPhone Mini / SE / 12 mini — 375px */
+@media (max-width: 390px) {
+  .page-wrap {
+    padding: 16px 12px 140px;
+  }
+  .t-xl  { font-size: 20px; }
+  .t-2xl { font-size: 26px; }
+  .dash-grid { 
+    grid-template-columns: 1fr !important;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .stat-val { font-size: 18px !important; }
+  .action-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .btn {
+    font-size: 12px;
+    padding: 9px 14px;
   }
 }
 
-/* SIDEBAR ERADICATION - TOTAL LOCK */
-.sidebar-container-final {
-  display: none !important;
+/* iPhone 14 / standard — 390-430px */
+@media (min-width: 391px) and (max-width: 430px) {
+  .page-wrap {
+    padding: 18px 14px 140px;
+  }
+  .stat-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
 }
 
+/* Large phones (iPhone Plus, Android XL) — 430-768px */
+@media (min-width: 431px) and (max-width: 767px) {
+  .page-wrap {
+    padding: 20px 16px 140px;
+  }
+}
+
+/* Tablet — 768px+ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page-wrap {
+    padding: 28px 24px 100px;
+  }
+  .t-sm   { font-size: 12px; }
+  .t-base { font-size: 14px; }
+  .t-md   { font-size: 16px; }
+  .t-lg   { font-size: 20px; }
+  .t-xl   { font-size: 28px; }
+  .t-2xl  { font-size: 38px; }
+  .md-row { flex-direction: row !important; }
+  .auth-hero {
+    flex: 1 !important;
+    border-right: 1px solid var(--border) !important;
+  }
+}
+
+/* Desktop — 1024px+ */
 @media (min-width: 1024px) {
+  .page-wrap {
+    padding: 40px 32px 40px;
+  }
+  .t-sm   { font-size: 12px; }
+  .t-base { font-size: 14px; }
+  .t-md   { font-size: 16px; }
+  .t-lg   { font-size: 20px; }
+  .t-xl   { font-size: 28px; }
+  .t-2xl  { font-size: 38px; }
   .sidebar-container-final {
     display: flex !important;
     height: 100%;
@@ -249,3 +297,18 @@ body {
     position: relative !important;
   }
 }
+
+/* ─── SIDEBAR (always hidden on mobile) ──────────────────────────────────── */
+.sidebar-container-final {
+  display: none !important;
+}
+
+/* ─── AUTH MOBILE ────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .auth-hero {
+    flex: none !important;
+    border-bottom: none !important;
+    padding: 40px 20px !important;
+  }
+}
+
